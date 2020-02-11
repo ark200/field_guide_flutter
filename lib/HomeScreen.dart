@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen>
   List data = [];
   var name = [];
   var sciname = [];
+  var url = [];
   var result;
 
 
@@ -72,7 +73,9 @@ class _HomeScreenState extends State<HomeScreen>
 
             },
             child: ListTile(
-              leading: Icon(Icons.image),
+//              leading: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index]["url"]),),
+              leading: Image(image:AssetImage("Images/isi.png")),
+//              leading: Icon(Icons.image),
               title: Text(data[index]["name"]),
               subtitle: Text(data[index]["scientificName"]),
             ),
