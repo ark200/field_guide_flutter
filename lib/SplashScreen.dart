@@ -17,19 +17,35 @@ class _SplashScreenState extends State<SplashScreen>
 {
   var token;
   @override
-  void initState() async
+  void initState()
+  {
+    super.initState();
+    _asyncMethod();
+//    SharedPreferences preferences =  SharedPreferences.getInstance() as SharedPreferences;
+//    token = preferences.getString('username');
+//    Timer(
+//      Duration(seconds: 3),
+//        () =>token ==null ? Navigator.of(context).pushReplacement(MaterialPageRoute(
+//          builder: (BuildContext context)=> LoginScreen()
+//        )):
+//        Navigator.of(context).pushReplacement(MaterialPageRoute(
+//            builder: (BuildContext context)=> HomeScreen()
+//        ))
+//    );
+  }
+
+  _asyncMethod() async
   {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     token = preferences.getString('username');
-    super.initState();
     Timer(
       Duration(seconds: 3),
-        () =>token ==null ? Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context)=> LoginScreen()
+        () => token == null ? Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) => LoginScreen()
         )):
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context)=> HomeScreen()
-        ))
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => HomeScreen()
+            ))
     );
   }
 
