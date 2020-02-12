@@ -26,6 +26,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   fluttertoast: ^3.1.0
   http: any
+  shared_preferences: "0.5.6+1"
 
 
 dev_dependencies:

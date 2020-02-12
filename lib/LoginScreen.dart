@@ -3,6 +3,7 @@ import 'package:field_guide/NetworkCall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget
 {
@@ -146,11 +147,13 @@ class _LoginState extends State<LoginScreen>
                                   var response = await ApiCall.makePostRequest("user/login",sendData: data);
                                   if(response.statusCode == 200)
                                     {
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      prefs.setString('username', username);
                                       setState(() {
                                         Fluttertoast.showToast(msg: "LOGIN SUCCESS");
                                         Navigator.of(context).pushReplacement(MaterialPageRoute<Null>(
                                           builder: (BuildContext context)
-                                              {
+                                               {
                                                 _saving = false;
                                                 return HomeScreen();
                                               }
