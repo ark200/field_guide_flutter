@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget
 
 class _HomeScreenState extends State<HomeScreen>
 {
-
   bool _saving = true;
   List data = [];
   var name = [];
@@ -36,28 +35,11 @@ class _HomeScreenState extends State<HomeScreen>
      print(data.length);
      _saving = false;
    });
-
     else
       setState(() {
         print("server error");
         _saving = false;
       });
-
-//    var response = await   ApiCall.makeGetRequest("snake/all/");
-
-//    if(json.decode(response.body)["status"]) {
-////      setState(() {
-////        _saving = true;
-//        data = json.decode(response.body)["data"] as List;
-//        print(response.statusCode);
-//        print(data.length);
-////        _saving = false;
-////      });
-//    }
-
-//    else
-//      print("server error");
-
   }
   @override
   void initState()

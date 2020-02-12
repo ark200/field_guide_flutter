@@ -191,7 +191,7 @@ class _LoginState extends State<LoginScreen>
 //                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> RegistrationScreen())),
                             child: Text("Sign Up",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold
                             ),),
                             ),
