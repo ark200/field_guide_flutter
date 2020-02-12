@@ -130,11 +130,12 @@ class _LoginState extends State<LoginScreen>
                           child: MaterialButton(
                             onPressed: () async
                             {
-                              setState(() {
-                                _saving = true;
-                              });
                               if(formkey.currentState.validate())
                                 {
+                                  setState(() {
+                                    _saving = true;
+                                  });
+
                                   formkey.currentState.save();
 
                                   Map data = {

@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen>
         if(photograph.length>0)
         {
           return Card(
+
             child: InkWell(
               onTap: ()
               {
@@ -146,6 +147,10 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           );
         }
+
+
+
+
 //        return Card(
 //          child: InkWell(
 //            onTap: (){
