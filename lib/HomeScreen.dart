@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen>
   var photograph =[];
   var url = [];
   var result;
+  DateTime currentBackPressTime;
 
 
   void call() async{
@@ -68,21 +69,52 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'FieldGuide',
-      theme: ThemeData(
-          primaryColor: Colors.white
-//        primarySwatch: Colors.white,
-      ),
-      home: Scaffold(
-        appBar: AppBar(title: Text('FIELD GUIDE'),),
-//        body: Text('hi'),
-        body:
-        _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
-        _myListView(context),
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'FIELD GUIDE',
+        theme: ThemeData(
+          primaryColor: Colors.white,
+//          primarySwatch: Colors.white,
+        ),
+        home: Scaffold(
+          appBar: AppBar(title: Text('FIELD GUIDE'),),
+          body:
+          _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
+              _myListView(context),
+        ),
       ),
     );
+
+
+//    return MaterialApp(
+//      debugShowCheckedModeBanner: false,
+//      title: 'FieldGuide',
+//      theme: ThemeData(
+//          primaryColor: Colors.white
+////        primarySwatch: Colors.white,
+//      ),
+//      home: Scaffold(
+//        appBar: AppBar(title: Text('FIELD GUIDE'),),
+////        body: Text('hi'),
+//        body:
+//        _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
+//        _myListView(context),
+//      ),
+//    );
+  }
+  
+  Future<bool> onWillPop()
+  {
+    DateTime now = DateTime.now();
+    if(currentBackPressTime ==  null || now.difference(currentBackPressTime)>Duration(seconds: 2))
+      {
+        currentBackPressTime = now;
+        Fluttertoast.showToast(msg: "Press Again to Exit Field Guide App");
+        return Future.value(false);
+      }
+    return Future.value(true);
   }
 
   Widget _myListView(BuildContext context)
