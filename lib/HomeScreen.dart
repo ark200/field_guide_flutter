@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:field_guide/LoginScreen.dart';
 import 'package:field_guide/NetworkCall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget
 {
@@ -61,7 +63,27 @@ class _HomeScreenState extends State<HomeScreen>
 //          primarySwatch: Colors.white,
         ),
         home: Scaffold(
-          appBar: AppBar(title: Text('FIELD GUIDE'),),
+          appBar: AppBar(title: Text('FIELD GUIDE'),
+          backgroundColor: Colors.white,
+          actions: <Widget>[
+            FlatButton(
+              textColor: Colors.black,
+              child: Text("LOGOUT"),
+              onPressed: () async
+              {
+                SharedPreferences preference = await SharedPreferences.getInstance();
+                preference.remove('username');
+                Navigator.of(context).pushReplacement(MaterialPageRoute<Null>(
+                    builder: (BuildContext context)
+                    {
+                      _saving = false;
+                      return LoginScreen();
+                    }
+                ));
+              },
+            )
+          ],
+          ),
           body:
           _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
               _myListView(context),
