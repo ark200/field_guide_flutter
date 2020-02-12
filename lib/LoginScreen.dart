@@ -15,13 +15,16 @@ class _LoginState extends State<LoginScreen>
   final formkey = GlobalKey<FormState>();
   var username, password;
   DateTime currentBackPressTime;
+  bool _saving = false;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
-        body: Center(
+        body:
+        _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
+        Center(
           child: SingleChildScrollView(
             child: Container(
               color: Colors.white,
@@ -127,6 +130,9 @@ class _LoginState extends State<LoginScreen>
                           child: MaterialButton(
                             onPressed: () async
                             {
+                              setState(() {
+                                _saving = true;
+                              });
                               if(formkey.currentState.validate())
                                 {
                                   formkey.currentState.save();
@@ -139,16 +145,27 @@ class _LoginState extends State<LoginScreen>
                                   var response = await ApiCall.makePostRequest("user/login",sendData: data);
                                   if(response.statusCode == 200)
                                     {
-                                      Fluttertoast.showToast(msg: "LOGIN SUCCESS");
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute<Null>(
-                                        builder: (BuildContext context)
-                                            {
-                                              return HomeScreen();
-                                            }
-                                      ));
+                                      setState(() {
+                                        Fluttertoast.showToast(msg: "LOGIN SUCCESS");
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute<Null>(
+                                          builder: (BuildContext context)
+                                              {
+                                                _saving = false;
+                                                return HomeScreen();
+                                              }
+                                        ));
+                                      });
+//                                      Fluttertoast.showToast(msg: "LOGIN SUCCESS");
+//                                      Navigator.of(context).pushReplacement(MaterialPageRoute<Null>(
+//                                        builder: (BuildContext context)
+//                                            {
+//                                              return HomeScreen();
+//                                            }
+//                                      ));
                                     }
                                   else
                                     {
+                                      _saving = false;
                                       Fluttertoast.showToast(msg: "Incorrect Username or password");
                                     }
                                 }
