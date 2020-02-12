@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget
 class _HomeScreenState extends State<HomeScreen>
 {
 
+  bool _saving = true;
   List data = [];
   var name = [];
   var sciname = [];
@@ -22,19 +23,39 @@ class _HomeScreenState extends State<HomeScreen>
 
 
   void call() async{
+    setState(() {
+      _saving = true;
+    });
     print("hsgjhg");
     var response = await   ApiCall.makeGetRequest("snake/all/");
-
-    if(json.decode(response.body)["status"]) {
-      setState(() {
-        data = json.decode(response.body)["data"] as List;
-        print(response.statusCode);
-        print(data.length);
-      });
-    }
+    if(json.decode(response.body)["status"])
+   setState(() {
+     data = json.decode(response.body)["data"] as List;
+     print(response.statusCode);
+     print(data.length);
+     _saving = false;
+   });
 
     else
-      print("server error");
+      setState(() {
+        print("server error");
+        _saving = false;
+      });
+
+//    var response = await   ApiCall.makeGetRequest("snake/all/");
+
+//    if(json.decode(response.body)["status"]) {
+////      setState(() {
+////        _saving = true;
+//        data = json.decode(response.body)["data"] as List;
+//        print(response.statusCode);
+//        print(data.length);
+////        _saving = false;
+////      });
+//    }
+
+//    else
+//      print("server error");
 
   }
   @override
@@ -57,7 +78,9 @@ class _HomeScreenState extends State<HomeScreen>
       home: Scaffold(
         appBar: AppBar(title: Text('FIELD GUIDE'),),
 //        body: Text('hi'),
-        body: _myListView(context),
+        body:
+        _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
+        _myListView(context),
       ),
     );
   }
@@ -84,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen>
                 title: Text(data[index]["name"]),
                 subtitle: Text(data[index]["scientificName"]),
                 trailing: Icon(Icons.arrow_right),
+
               ),
             ),
           );
