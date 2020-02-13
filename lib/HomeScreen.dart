@@ -21,6 +21,21 @@ class _HomeScreenState extends State<HomeScreen>
   var photograph =[];
   var url = [];
   var result;
+  var states = [];
+  var lookalike = [];
+  var _id = [];
+  var distribution = [];
+  var venomtype = [];
+  var family = [];
+  var characteristics = [];
+  var description = [];
+  var rname = [];
+  var wlpa =[];
+  var iucn = [];
+  var shortdesc = [];
+  var occurance = [];
+  var othernames = [];
+  var genus = [];
   DateTime currentBackPressTime;
 
 
@@ -84,6 +99,8 @@ class _HomeScreenState extends State<HomeScreen>
             )
           ],
           ),
+
+
           body:
           _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
               _myListView(context),
@@ -121,53 +138,115 @@ class _HomeScreenState extends State<HomeScreen>
     return Future.value(true);
   }
 
+  _viewsnakeProfile(var index1)
+  {
+    print(index1);
+  }
+
   Widget _myListView(BuildContext context)
   {
     return ListView.builder(
       itemCount: data.length,
       itemBuilder:(context, index)
       {
-        photograph = data[index]["photographs"];
+        states           = data[index]["states"];
+        lookalike        = data[index]["lookalike"];
+//        _id              = data[index]["_id"];
+//        distribution     = data[index]["distribution"];
+//        venomtype        = data[index]["venomType"];
+//        family           = data[index]["family"];
+//        characteristics  = data[index]["characteristics"];
+//        description      = data[index]["description"];
+//        rname            = data[index]["rname"];
+//        wlpa             = data[index]["wlpa"];
+//        iucn             = data[index]["iucn"];
+//        shortdesc        = data[index]["shortdesc"];
+//        occurance        = data[index]["occurance"];
+//        othernames       = data[index]["othernames"];
+//        genus            = data[index]["genus"];
+//        photograph       = data[index]["photographs"];
         if(photograph.length>0)
         {
-          return Card(
-
-            child: InkWell(
-              onTap: ()
-              {
-
-              },
-              child: ListTile(
-                leading: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index]["photographs"][0]["url"]),
+          return SafeArea(
+            child: Card(
+              child: InkWell(
+                onTap: ()
+                {
+                  _viewsnakeProfile(index);
+                },
+                child: ListTile(
+                  leading: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index]["photographs"][0]["url"]),
                   width: 100,
-                  height: 100,),
-                title: Text(data[index]["name"]),
-                subtitle: Text(data[index]["scientificName"]),
-                trailing: Icon(Icons.arrow_right),
+                    height: 100,
+                  ),
+                  title: Text(data[index]["name"]),
+                  subtitle: Text(data[index]["scientificName"]),
+                  trailing: Icon(Icons.arrow_right),
 
+                ),
               ),
             ),
           );
+
+//          return Card(
+//
+//            child: InkWell(
+//              onTap: ()
+//              {
+//
+//              },
+//              child: ListTile(
+//                leading: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index]["photographs"][0]["url"]),
+//                  width: 100,
+//                  height: 100,),
+//                title: Text(data[index]["name"]),
+//                subtitle: Text(data[index]["scientificName"]),
+//                trailing: Icon(Icons.arrow_right),
+//
+//              ),
+//            ),
+//          );
         }
         else
         {
-          return Card(
-            child: InkWell(
-              onTap: ()
-              {
+          return SafeArea(
+            child: Card(
+              child: InkWell(
+                onTap: ()
+                {
 
-              },
-              child: ListTile(
-                leading: Image(image: AssetImage("Images/noiamge.png"),
+                },
+                child: ListTile(
+                  leading: Image(image: AssetImage("Images/noiamge.png"),
                   height: 100,
-                  width: 100,),
-//                  leading: Icon(Icons.image),
-                title: Text(data[index]["name"]),
-                subtitle: Text(data[index]["scientificName"]),
-                trailing: Icon(Icons.arrow_right),
+                    width: 100,
+                  ),
+                  title: Text(data[index]["name"]),
+                  subtitle: Text(data[index]["scientificName"]),
+                  trailing: Icon(Icons.arrow_right),
+                ),
               ),
             ),
           );
+
+
+//          return Card(
+//            child: InkWell(
+//              onTap: ()
+//              {
+//
+//              },
+//              child: ListTile(
+//                leading: Image(image: AssetImage("Images/noiamge.png"),
+//                  height: 100,
+//                  width: 100,),
+////                  leading: Icon(Icons.image),
+//                title: Text(data[index]["name"]),
+//                subtitle: Text(data[index]["scientificName"]),
+//                trailing: Icon(Icons.arrow_right),
+//              ),
+//            ),
+//          );
         }
 
 
