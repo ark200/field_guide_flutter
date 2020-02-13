@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'ViewSnake.dart';
+
 class HomeScreen extends StatefulWidget
 {
   @override
@@ -107,23 +109,6 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
     );
-
-
-//    return MaterialApp(
-//      debugShowCheckedModeBanner: false,
-//      title: 'FieldGuide',
-//      theme: ThemeData(
-//          primaryColor: Colors.white
-////        primarySwatch: Colors.white,
-//      ),
-//      home: Scaffold(
-//        appBar: AppBar(title: Text('FIELD GUIDE'),),
-////        body: Text('hi'),
-//        body:
-//        _saving ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),),):
-//        _myListView(context),
-//      ),
-//    );
   }
   
   Future<bool> onWillPop()
@@ -138,10 +123,24 @@ class _HomeScreenState extends State<HomeScreen>
     return Future.value(true);
   }
 
-  _viewsnakeProfile(var index1)
-  {
-    print(index1);
-  }
+//  _viewsnakeProfile(var index1)
+//  {
+//    return Scaffold(
+//      body:
+//      Container(
+//        child: SingleChildScrollView(
+//          child: Container(
+//            padding: EdgeInsets.all(20),
+//            child: SizedBox(
+//              height: 150,
+//              child: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index1]["photographs"][0]["url"])),
+//            ),
+//
+//          ),
+//        ),
+//      ),
+//    );
+//  }
 
   Widget _myListView(BuildContext context)
   {
@@ -149,11 +148,10 @@ class _HomeScreenState extends State<HomeScreen>
       itemCount: data.length,
       itemBuilder:(context, index)
       {
-        states           = data[index]["states"];
-        lookalike        = data[index]["lookalike"];
+//        states           = data[index]["states"];
+//        lookalike        = data[index]["lookalike"];
 //        _id              = data[index]["_id"];
 //        distribution     = data[index]["distribution"];
-//        venomtype        = data[index]["venomType"];
 //        family           = data[index]["family"];
 //        characteristics  = data[index]["characteristics"];
 //        description      = data[index]["description"];
@@ -164,15 +162,20 @@ class _HomeScreenState extends State<HomeScreen>
 //        occurance        = data[index]["occurance"];
 //        othernames       = data[index]["othernames"];
 //        genus            = data[index]["genus"];
-//        photograph       = data[index]["photographs"];
+        photograph       = data[index]["photographs"];
         if(photograph.length>0)
         {
           return SafeArea(
+            left: true,
+            top: true,
+            right: true,
+            bottom: true,
+            maintainBottomViewPadding: false,
             child: Card(
               child: InkWell(
                 onTap: ()
                 {
-                  _viewsnakeProfile(index);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ViewSnake(index)));
                 },
                 child: ListTile(
                   leading: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index]["photographs"][0]["url"]),
@@ -187,25 +190,6 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
           );
-
-//          return Card(
-//
-//            child: InkWell(
-//              onTap: ()
-//              {
-//
-//              },
-//              child: ListTile(
-//                leading: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index]["photographs"][0]["url"]),
-//                  width: 100,
-//                  height: 100,),
-//                title: Text(data[index]["name"]),
-//                subtitle: Text(data[index]["scientificName"]),
-//                trailing: Icon(Icons.arrow_right),
-//
-//              ),
-//            ),
-//          );
         }
         else
         {
@@ -214,7 +198,8 @@ class _HomeScreenState extends State<HomeScreen>
               child: InkWell(
                 onTap: ()
                 {
-
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => ViewSnake(index)));
+//                  _viewsnakeProfile(index);
                 },
                 child: ListTile(
                   leading: Image(image: AssetImage("Images/noiamge.png"),
@@ -228,45 +213,7 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
           );
-
-
-//          return Card(
-//            child: InkWell(
-//              onTap: ()
-//              {
-//
-//              },
-//              child: ListTile(
-//                leading: Image(image: AssetImage("Images/noiamge.png"),
-//                  height: 100,
-//                  width: 100,),
-////                  leading: Icon(Icons.image),
-//                title: Text(data[index]["name"]),
-//                subtitle: Text(data[index]["scientificName"]),
-//                trailing: Icon(Icons.arrow_right),
-//              ),
-//            ),
-//          );
         }
-
-
-
-
-//        return Card(
-//          child: InkWell(
-//            onTap: (){
-//
-//            },
-//            child: ListTile(
-////              leading: Image(image: NetworkImage("http://18.191.40.18/u/"+data[index]["photographs"[0]]["url"]),),
-//              leading: Image(image:AssetImage("Images/isi.png")),
-////              leading: Icon(Icons.image),
-//              title: Text(data[index]["name"]),
-//              subtitle: Text(data[index]["scientificName"]),
-//
-//            ),
-//          ),
-//        );
       },
     );
   }
